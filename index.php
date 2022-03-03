@@ -25,6 +25,9 @@ switch ($request->getPath()) {
         $controller = new APIBaseController($request, $response);
         break;
 
+    default:
+        $controller = new ErrorController($request, $response);
+        break;
 }
 
 echo $response->getData();

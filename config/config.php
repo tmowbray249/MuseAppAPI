@@ -1,7 +1,7 @@
 <?php
 
 const DEV_MODE = true;  # todo set to false before demos or putting live
-const BASEPATH = '/museapp/museapi/';
+const BASEPATH = '/museapp/MuseAppAPI/';
 const DATABASE_DIS= "db/dis.sqlite";  # todo update
 const DATABASE_USER = "db/user.sqlite"; # todo update
 const SECRET_KEY = '.E^Dk>n%%[Qrj{D#I]11*t^#vw~2b7Gy|%S*74g]F9?n2rfV#:Ze9`Izf{>&Pdb';  # todo may be redundant
