@@ -4,7 +4,7 @@ const DEV_MODE = true;  # todo set to false before demos or putting live
 const BASEPATH = '/museapp/MuseAppAPI/';
 
 if (DEV_MODE) {
-    $DATABASE = "db/muse-db.sqlite";
+    $DATABASE = "db/muse-dev-db.sqlite";
 } else {
     $DATABASE = "CONNECT TO PRODUCTION DATABASE";  # todo update
 }
