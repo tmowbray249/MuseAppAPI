@@ -3,9 +3,11 @@
 const DEV_MODE = true;  # todo set to false before demos or putting live
 const BASEPATH = '/museapp/MuseAppAPI/';
 
-
-const DATABASE_DIS= "db/dis.sqlite";  # todo update
-const DATABASE_USER = "db/user.sqlite"; # todo update
+if (DEV_MODE) {
+    $DATABASE = "db/muse-db.sqlite";
+} else {
+    $DATABASE = "CONNECT TO PRODUCTION DATABASE";  # todo update
+}
 
 ini_set('display_errors', DEV_MODE);
 ini_set('display_startup_errors', DEV_MODE);
