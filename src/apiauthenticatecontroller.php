@@ -15,7 +15,7 @@ class APIAuthenticateController extends Controller {
 
         if ($this->getRequest()->getRequestMethod() === "POST") {
             $token = $this->getRequest()->getParameter("token");
-            $email = $this->getRequest()->getParameter("email");
+            $username = $this->getRequest()->getParameter("username");
             $password = $this->getRequest()->getParameter("password");
 
             if (!is_null($token)) {
@@ -37,9 +37,9 @@ class APIAuthenticateController extends Controller {
                 }
 
             } else {
-                if (!is_null($email) && !is_null($password)) {
+                if (!is_null($username) && !is_null($password)) {
 
-                    $this->getGateway()->findPassword($email);
+                    $this->getGateway()->findPassword($username);
 
                     if (count($this->getGateway()->getResult()) == 1) {
                         $password_hash = $this->getGateway()->getResult()[0]['password'];
@@ -48,7 +48,7 @@ class APIAuthenticateController extends Controller {
                             $key = SECRET_KEY;
 
                             $payload = [
-                                'sub' => $email,
+                                'sub' => $username,
                                 'user_id' => $this->getGateway()->getResult()[0]['id'],
                                 'iss' => '<\Issuer url>',
                                 'aud' => '<\audience identifier>',
@@ -63,7 +63,7 @@ class APIAuthenticateController extends Controller {
                 }
 
                 if (!array_key_exists('token', $data)) {
-                    $this->getResponse()->setUnauthorisedResponse("Incorrect email or password");
+                    $this->getResponse()->setUnauthorisedResponse("Incorrect username or password");
                 }
             }
         } else {
