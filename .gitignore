@@ -48,5 +48,6 @@ Thumbs.db
 *.mov
 *.wmv
 
+dev-db/
 dev-db/.htaccess
 dev-db/muse-dev-db.sqlite
