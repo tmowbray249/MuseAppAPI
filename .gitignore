@@ -47,3 +47,6 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+
+dev-db/.htaccess
+dev-db/muse-dev-db.sqlite
