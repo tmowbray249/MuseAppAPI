@@ -1,13 +1,16 @@
 <?php
-
-const DEV_MODE = true;  # todo set to false before demos or putting live
-const BASEPATH = '/museapp/MuseAppAPI/';
-
-if (DEV_MODE) {
-    $DATABASE = "db/muse-dev-db.sqlite";
-} else {
-    $DATABASE = "CONNECT TO PRODUCTION DATABASE";  # todo update
+$env = [];
+$env_file = explode("\n", file_get_contents('.env'));
+$i = 0;
+while ($i < count($env_file)){
+    $env_parts = explode('=', $env_file[$i]);
+    $env[$env_parts[0]] = $env_parts[1];
+    $i++;
 }
+
+define('DEV_MODE', $env['DEV_MODE']); # todo set to true or use a production env before putting live
+const BASEPATH = '/museapp/MuseAppAPI/';
+const DATABASE = BASEPATH . 'dev-db/muse-dev-db.sqlite';  # todo update to point to production server
 
 ini_set('display_errors', DEV_MODE);
 ini_set('display_startup_errors', DEV_MODE);

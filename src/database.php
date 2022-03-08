@@ -9,7 +9,7 @@ class Database {
     }
 
     private function setDbConnection($dbName) {
-        $this->dbConnection = new PDO("sqlite:$dbName"); // todo update to point at correct database type
+        $this->dbConnection = new PDO("sqlite:$dbName");
         $this->dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
