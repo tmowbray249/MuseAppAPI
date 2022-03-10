@@ -27,7 +27,7 @@ class APIAuthenticateController extends Controller {
                     if (isset($decoded->iss)) {
                         $issuer = parse_url($decoded->iss, PHP_URL_PATH);
                         if ($issuer === BASEPATH) {
-                            $data = ['token' => $token];
+                            $data = ['token' => $token, 'username' => $decoded->sub];
                         }
                     } else {
                         $this->getResponse()->setUnauthorisedResponse("You do not have permission to access this endpoint");
