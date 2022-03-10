@@ -6,6 +6,8 @@ use \Firebase\JWT\ExpiredException;
 
 class APIAuthenticateController extends Controller {
 
+    # todo should this check that the user is an admin user if the request comes from the admin frontend?
+
     protected function setGateway() {
         $this->gateway = new UserGateway();
     }
@@ -49,9 +51,9 @@ class APIAuthenticateController extends Controller {
 
                             $payload = [
                                 'sub' => $username,
-                                'user_id' => $this->getGateway()->getResult()[0]['id'],
-                                'iss' => '<\Issuer url>',
-                                'aud' => '<\audience identifier>',
+                                'user_id' => $this->getGateway()->getResult()[0]['user_id'],
+                                'iss' => 'http://unn-w17020085.newnumyspace.co.uk/museapp/MuseAppAPI/',  # todo this needs updating to the correct issuer url
+                                'aud' => '<\set audience\>',
                                 'iat' => time(),
                                 'exp' => time() + 259200 // 3 days
                             ];

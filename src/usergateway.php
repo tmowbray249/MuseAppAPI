@@ -7,8 +7,8 @@ class UserGateway extends Gateway {
     }
 
     public function findPassword($username) {
-        $sql = "SELECT id, password
-                FROM user
+        $sql = "SELECT user_id, password
+                FROM users
                 WHERE username = ?";
         $param = [$username];
         $result = $this->getDatabase()->executeSQL($sql, $param);
