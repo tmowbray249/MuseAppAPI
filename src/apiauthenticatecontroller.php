@@ -59,7 +59,7 @@ class APIAuthenticateController extends Controller {
                             ];
 
                             $jwt = JWT::encode($payload, $key, 'HS256');
-                            $data = ['token' => $jwt];
+                            $data = ['token' => $jwt, 'username' => $username];
                         }
                     }
                 }
