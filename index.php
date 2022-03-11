@@ -25,6 +25,10 @@ switch ($request->getPath()) {
         $controller = new APIBaseController($request, $response);
         break;
 
+    case 'api/authenticate':
+        $controller = new APIAuthenticateController($request, $response);
+        break;
+
     default:
         $controller = new ErrorController($request, $response);
         break;

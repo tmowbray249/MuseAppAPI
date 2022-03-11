@@ -6,6 +6,8 @@ use \Firebase\JWT\ExpiredException;
 
 class APIAuthenticateController extends Controller {
 
+    # todo should this check that the user is an admin user if the request comes from the admin frontend?
+
     protected function setGateway() {
         $this->gateway = new UserGateway();
     }
@@ -15,7 +17,7 @@ class APIAuthenticateController extends Controller {
 
         if ($this->getRequest()->getRequestMethod() === "POST") {
             $token = $this->getRequest()->getParameter("token");
-            $email = $this->getRequest()->getParameter("email");
+            $username = $this->getRequest()->getParameter("username");
             $password = $this->getRequest()->getParameter("password");
 
             if (!is_null($token)) {
@@ -25,7 +27,7 @@ class APIAuthenticateController extends Controller {
                     if (isset($decoded->iss)) {
                         $issuer = parse_url($decoded->iss, PHP_URL_PATH);
                         if ($issuer === BASEPATH) {
-                            $data = ['token' => $token];
+                            $data = ['token' => $token, 'username' => $decoded->sub];
                         }
                     } else {
                         $this->getResponse()->setUnauthorisedResponse("You do not have permission to access this endpoint");
@@ -37,9 +39,9 @@ class APIAuthenticateController extends Controller {
                 }
 
             } else {
-                if (!is_null($email) && !is_null($password)) {
+                if (!is_null($username) && !is_null($password)) {
 
-                    $this->getGateway()->findPassword($email);
+                    $this->getGateway()->findPassword($username);
 
                     if (count($this->getGateway()->getResult()) == 1) {
                         $password_hash = $this->getGateway()->getResult()[0]['password'];
@@ -48,22 +50,22 @@ class APIAuthenticateController extends Controller {
                             $key = SECRET_KEY;
 
                             $payload = [
-                                'sub' => $email,
-                                'user_id' => $this->getGateway()->getResult()[0]['id'],
-                                'iss' => '<\Issuer url>',
-                                'aud' => '<\audience identifier>',
+                                'sub' => $username,
+                                'user_id' => $this->getGateway()->getResult()[0]['user_id'],
+                                'iss' => 'http://unn-w17020085.newnumyspace.co.uk/museapp/MuseAppAPI/',  # todo this needs updating to the correct issuer url
+                                'aud' => '<\set audience\>',
                                 'iat' => time(),
                                 'exp' => time() + 259200 // 3 days
                             ];
 
                             $jwt = JWT::encode($payload, $key, 'HS256');
-                            $data = ['token' => $jwt];
+                            $data = ['token' => $jwt, 'username' => $username];
                         }
                     }
                 }
 
                 if (!array_key_exists('token', $data)) {
-                    $this->getResponse()->setUnauthorisedResponse("Incorrect email or password");
+                    $this->getResponse()->setUnauthorisedResponse("Incorrect username or password");
                 }
             }
         } else {

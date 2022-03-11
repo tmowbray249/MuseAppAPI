@@ -3,14 +3,14 @@
 class UserGateway extends Gateway {
 
     public function __construct() {
-        $this->setDatabase(DATABASE_USER);
+        $this->setDatabase(DATABASE);
     }
 
-    public function findPassword($email) {
-        $sql = "SELECT id, password
-                FROM user
-                WHERE email = ?";
-        $param = [$email];
+    public function findPassword($username) {
+        $sql = "SELECT user_id, password
+                FROM users
+                WHERE username = ?";
+        $param = [$username];
         $result = $this->getDatabase()->executeSQL($sql, $param);
         $this->setResult($result);
     }
