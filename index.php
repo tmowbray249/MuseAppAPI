@@ -1,4 +1,4 @@
-<?php
+    <?php
 include "config/config.php";
 
 $request = new request();
@@ -30,7 +30,7 @@ switch ($request->getPath()) {
         break;
 
     case 'api/events':
-        $controller = new apieventscontroller($request, $response);
+        $controller = new APIEventsController($request, $response);
         break;
 
     default:

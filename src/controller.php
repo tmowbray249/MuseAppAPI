@@ -48,5 +48,12 @@ abstract class Controller {
 
     protected function processRequest() {}
 
+    protected function saveImage($path, $name, $image) {
+        $image_chunks = explode(";base64,", $image);
+        $base_64_img = base64_decode($image_chunks[1]);
+        $file_path = $path . $name;
+        file_put_contents($file_path, $base_64_img);
+    }
+
 
 }

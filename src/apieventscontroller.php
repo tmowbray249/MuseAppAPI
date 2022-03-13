@@ -1,6 +1,6 @@
 <?php
 
-class apieventscontroller extends Controller {
+class APIEventsController extends Controller {
 
     protected function setGateway() {
         $this->gateway = new eventsgateway();
@@ -28,9 +28,13 @@ class apieventscontroller extends Controller {
                 } elseif ($action == "new-event") {
                     $event_data = $this->prepareData($this->getEventData());
                     $this->getGateway()->addEvent($event_data);
-                } elseif ($action == "save-event") {
+                } elseif ($action == "save-event"){
                     //todo validation & check no db error
                     $event_data = $this->prepareData($this->getEventData());
+                    //todo save image then save file name
+                    if ($event_data['event_image'] !== "") {
+                        $this->saveImage('assets/images/event_images/', $event_data['event_image_name'], $event_data['event_image']);
+                    }
                     $this->getGateway()->saveEvent($event_data);
                     $this->getResponse()->setOkResponse("Event successfully saved.");
                 } else if ($action == "delete-event") {
@@ -53,7 +57,8 @@ class apieventscontroller extends Controller {
             'event_name' => $this->getRequest()->getParameter("event_name"),
             'event_summary' => $this->getRequest()->getParameter("event_summary"),
             'event_category' => $this->getRequest()->getParameter("event_category"),
-            'event_image'   => $this->getRequest()->getParameter("event_image"),
+            'event_image_name' => $this->getRequest()->getParameter("event_image_name"),
+            'event_image' => $this->getRequest()->getParameter("event_image"),
             'event_description' => $this->getRequest()->getParameter("event_description"),
             'event_date' => $this->getRequest()->getParameter("event_date"),
             'event_start' => $this->getRequest()->getParameter("event_start"),
@@ -73,7 +78,9 @@ class apieventscontroller extends Controller {
                 $data[$key] = "";
             }
         }
+
         return $data;
     }
+
 
 }
