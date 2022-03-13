@@ -74,6 +74,12 @@ class JSONResponse extends response {
         $this->setMessage($message);
     }
 
+    public function setBadRequestResponse($message) {
+        $this->setStatusCode(400);
+        $this->setStatusText("Bad Request");
+        $this->setMessage($message);
+    }
+
     public function setUnprocessableEntityResponse() {
         $this->setStatusCode(422);
         $this->setStatusText("Unprocessable Entity");

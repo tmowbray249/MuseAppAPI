@@ -13,11 +13,16 @@ class Database {
         $this->dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function executeSQL($sql, $params = []) {
+    public function executeSQL($sql, $params = [], $return_ID=false)
+    {
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->execute($params);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($return_ID) {
+            return $this->dbConnection->lastInsertID();
+        } else {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 
 }
