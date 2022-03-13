@@ -50,5 +50,6 @@ Thumbs.db
 
 dev-db/
 dev-db/.htaccess
-dev-db/muse-dev-db.sqlite
+muse-dev-db.sqlite
 .env
+/muse-dev-db.sqlite

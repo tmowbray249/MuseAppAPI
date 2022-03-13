@@ -29,6 +29,10 @@ switch ($request->getPath()) {
         $controller = new APIAuthenticateController($request, $response);
         break;
 
+    case 'api/events':
+        $controller = new apieventscontroller($request, $response);
+        break;
+
     default:
         $controller = new ErrorController($request, $response);
         break;
